@@ -3,7 +3,7 @@ import os
 from gtts import gTTS
 
 # Set up the page layout
-st.set_page_config(page_title="Project Portfolio", layout="wide")
+st.set_page_config(page_title="Pavansai's Project Portfolio", layout="wide")
 
 # Sidebar with project buttons
 st.sidebar.title("Projects")
