@@ -16,7 +16,7 @@ project_choice = st.sidebar.selectbox(
 # Display content based on the selected project
 if project_choice == "Home":
     st.title("Welcome to Pavansai's Project Portfolio!")
-    st.write("Select a project from the sidebar to get started.")
+    st.write("Select a project from the sidebar which will be appeared by clicking on arrow beside to get started.")
     
 elif project_choice == "Text-To-Speech":
     st.write("### Welcome to Xara")
