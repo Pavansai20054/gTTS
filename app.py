@@ -10,7 +10,7 @@ st.set_page_config(page_title="Pavansai's Project Portfolio", layout="wide")
 st.sidebar.title("Projects")
 project_choice = st.sidebar.selectbox(
     "Choose a project", 
-    ["Home", "Project 1", "Project 2", "Project 3", "Project 4", "Project 5"]
+    ["Home", "Text-To-Speech", "Project 2", "Project 3", "Project 4", "Project 5"]
 )
 
 # Display content based on the selected project
@@ -18,30 +18,93 @@ if project_choice == "Home":
     st.title("Welcome to Pavansai's Project Portfolio!")
     st.write("Select a project from the sidebar to get started.")
     
-elif project_choice == "Project 1":
-    st.write("### Project 1 Page")
+elif project_choice == "Text-To-Speech":
+    st.write("### Welcome to Xara")
     st.write("This project uses text-to-speech to create a chatbot voice.")
 
-    # Language options for different accents and languages
-    language_options = {
-        "US English": ('en', "Hello Everyone! I am Pavan's chatbot. My name is T-Rex."),
-        "UK English": ('en', "Hello Everyone! I am Pavan's chatbot. My name is T-Rex."),
-        "Australian English": ('en', "Hello Everyone! I am Pavan's chatbot. My name is T-Rex."),
-        "Indian English": ('en', "Hello Everyone! I am Pavan's chatbot. My name is T-Rex."),
-        "Hindi": ('hi', "नमस्ते सभी को! मैं पवन का चैटबॉट हूँ। मेरा नाम टी-रेक्स है।"),
-        "Telugu": ('te', "అందరికీ నమస్కారం! నేను పవన్ యొక్క చాట్బాట్‌ని. నా పేరు టీ-రెక్స్."),
-        "Marathi": ('mr', "नमस्कार सर्वांना! मी पवनचा चॅटबॉट आहे. माझं नाव टी-रेक्स आहे."),
-        "Kannada": ('kn', "ಎಲ್ಲರಿಗೂ ನಮಸ್ಕಾರ! ನಾನು ಪವನನ ಚಾಟ್ಬಾಟ್. ನನ್ನ ಹೆಸರು ಟಿ-ರೆಕ್ಸ್."),
-        "Tamil": ('ta', "வணக்கம் அனைவருக்கும்! நான் பவன் நாட்டு பேச்சாளர். என் பெயர் டி-ரெக்ஸ்.")
+    # Define the language options alphabetically sorted
+    indian_languages = {
+        "Assamese": 'as',
+        "Bengali": 'bn',
+        "Gujarati": 'gu',
+        "Hindi": 'hi',
+        "Kannada": 'kn',
+        "Konkani": 'gom',
+        "Malayalam": 'ml',
+        "Marathi": 'mr',
+        "Odia": 'or',
+        "Punjabi": 'pa',
+        "Sanskrit": 'sa',
+        "Tamil": 'ta',
+        "Telugu": 'te',
+        "Urdu": 'ur',
+        "Bodo": 'brx',  
+        "Dogri": 'doi',  
+        "Maithili": 'mai',  
+        "Manipuri": 'mni',  
+        "Santali": 'sat',  
+        "Rajasthani": 'raj',  
+        "Sindhi": 'sd',  
+        "Nepali": 'ne',  
+        "Meitei": 'mni',  
+        "Tulu": 'tcy',  
+        "Mizo": 'lus',  
+        "Kashmiri": 'ks',  
+        "Santhali": 'sat'  
     }
 
-    # Dropdown to choose the voice accent/language
-    st.write("#### Voice Accent / Language")
-    accent_choice = st.selectbox("Choose a voice/accent or language", list(language_options.keys()))
+    international_languages = {
+        "Arabic": 'ar',
+        "Chinese": 'zh-cn',
+        "Dutch": 'nl',
+        "English": 'en',
+        "French": 'fr',
+        "German": 'de',
+        "Italian": 'it',
+        "Japanese": 'ja',
+        "Korean": 'ko',
+        "Portuguese": 'pt',
+        "Russian": 'ru',
+        "Spanish": 'es',
+        "Swedish": 'sv',
+        "Turkish": 'tr',
+        "Thai": 'th',  
+        "Vietnamese": 'vi',  
+        "Persian": 'fa',  
+        "Swahili": 'sw',  
+        "Filipino": 'tl',  
+        "Finnish": 'fi',  
+        "Hungarian": 'hu',  
+        "Hebrew": 'iw',  
+        "Malay": 'ms',  
+        "Ukrainian": 'uk'  
+    }
 
-    # Set default language and sample text based on selected language
-    language = language_options[accent_choice][0]
-    default_text = language_options[accent_choice][1]
+    # Dropdowns for Indian and International languages
+    st.write("#### Select Language")
+    indian_language_choice = st.selectbox("Choose an Indian Language", ["None"] + list(indian_languages.keys()))
+    international_language_choice = st.selectbox("Choose an International Language", ["None"] + list(international_languages.keys()))
+
+    # Logic to handle selection
+    if indian_language_choice != "None":
+        international_language_choice = "None"  # Reset international selection
+        st.warning("You have selected an Indian language. The international language selection has been reset.")
+        
+    elif international_language_choice != "None":
+        indian_language_choice = "None"  # Reset Indian selection
+        st.warning("You have selected an International language. The Indian language selection has been reset.")
+
+    # Determine chosen language code and default text based on selection
+    chosen_language = None
+    default_text = "Hello, I am Xara, Pavan's chatbot."
+
+    # Assign language code and default text based on selection
+    if indian_language_choice != "None":
+        chosen_language = indian_languages[indian_language_choice]
+        default_text = f"Hello, I am Pavan's chatbot, My name is Xara, I can also speak {indian_language_choice}."
+    elif international_language_choice != "None":
+        chosen_language = international_languages[international_language_choice]
+        default_text = f"Hello, I am Pavan's chatbot, My name is Xara, I can also speak {international_language_choice}."
 
     # File uploader for text input
     uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
@@ -51,43 +114,46 @@ elif project_choice == "Project 1":
 
     # If a file is uploaded, read its content
     if uploaded_file is not None:
-        # Read the file contents
         mytext = uploaded_file.read().decode("utf-8")
         st.success("File uploaded successfully!")
-        
-        # Check if the text is in English, then translate to the chosen language
-        translator = Translator()
-        detected_lang = translator.detect(mytext).lang
-        if detected_lang == 'en' and language != 'en':  # Only translate if it's English and the target language is not English
-            translated_text = translator.translate(mytext, dest=language).text
-            mytext = translated_text
-            st.success(f"Text translated to {accent_choice}!")
-        else:
-            st.info(f"Text is in {detected_lang}, no translation needed.")
 
     # Text area for display and editing
     user_input_text = st.text_area("Text to be read aloud:", mytext, height=100)
 
-    # Button to link to GitHub
-    if st.button("Code!"):
-        github_url = "https://github.com/Pavansai20054/gTTS/blob/main/app.py"  # Replace with your GitHub URL
-        st.markdown(f"[Here you will get the code.]({github_url})", unsafe_allow_html=True)
+    # Buttons for Translate and Code
+    col1, col2 = st.columns(2)
 
-    # Translate user input if provided
-    if user_input_text:
-        translator = Translator()
-        translated_text = translator.translate(user_input_text, dest=language).text
-        mytext = translated_text
+    # Translate button (first column)
+    with col1:
+        if st.button("Translate"):
+            if user_input_text and chosen_language:
+                try:
+                    translator = Translator()
+                    translated_text = translator.translate(user_input_text, dest=chosen_language).text
+                    
+                    # Display the translated text
+                    st.write("### Translated Text:")
+                    st.write(translated_text)
+                    
+                    st.success(f"Text translated to {indian_language_choice or international_language_choice}!")
 
-        # Perform text-to-speech with the selected accent/language
-        output = gTTS(text=mytext, lang=language, slow=False)
+                    # Generate audio in the selected language
+                    output = gTTS(text=translated_text, lang=chosen_language, slow=False)
 
-        # Save the audio file
-        output_file = "output.mp3"
-        output.save(output_file)
+                    # Save the audio file
+                    output_file = "translated_output.mp3"
+                    output.save(output_file)
 
-        # Play the audio file
-        st.audio(output_file)  # Streamlit method to play audio
+                    # Play the audio file
+                    st.audio(output_file)  # Streamlit method to play audio
+                except Exception as e:
+                    st.error(f"An error occurred during translation: {e}")
+
+    # Code button (second column)
+    with col2:
+        if st.button("Code!"):
+            github_url = "https://github.com/Pavansai20054/gTTS/blob/main/app.py"  # Replace with your GitHub URL
+            st.markdown(f"[Here you will get the code.]({github_url})", unsafe_allow_html=True)
 
 elif project_choice == "Project 2":
     st.write("### Project 2 Page")
