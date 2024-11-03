@@ -7,6 +7,7 @@ from PIL import Image
 import numpy as np
 import PyPDF2
 from docx import Document
+import chardet  # Import chardet for encoding detection
 
 # Set up the page layout
 st.set_page_config(page_title="Pavansai's Project Portfolio", layout="wide")
@@ -21,7 +22,7 @@ project_choice = st.sidebar.selectbox(
 # Display content based on the selected project
 if project_choice == "Home":
     st.title("Welcome to Pavansai's Project Portfolio!")
-    st.write("Select a project from the sidebar which will be appeared by clicking on arrow beside to get started.")
+    st.write("Select a project from the sidebar to get started.")
     
 elif project_choice == "Text-To-Speech":
     st.write("### Welcome to Xara! Text-To-Speech bot")
@@ -92,7 +93,11 @@ elif project_choice == "Text-To-Speech":
     if uploaded_file is not None:
         # Handling different file types
         if uploaded_file.type == "text/plain":
-            mytext = uploaded_file.read().decode("utf-8")
+            # Read and decode the text file using chardet
+            raw_data = uploaded_file.read()
+            result = chardet.detect(raw_data)
+            encoding = result['encoding']
+            mytext = raw_data.decode(encoding)
             st.success("Text file uploaded successfully!")
         
         elif uploaded_file.type == "application/pdf":
@@ -142,8 +147,11 @@ elif project_choice == "Text-To-Speech":
                 try:
                     translator = Translator()
                     chosen_language = indian_languages.get(indian_language_choice) or international_languages.get(international_language_choice)
-                    translated_text = translator.translate(user_input_text, dest=chosen_language).text
                     
+                    # Log the chosen language for debugging
+                    st.write(f"Chosen Language Code: {chosen_language}")
+
+                    translated_text = translator.translate(user_input_text, dest=chosen_language).text
                     st.write("### Translated Text:")
                     st.write(translated_text)
                     
