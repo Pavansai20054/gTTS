@@ -25,7 +25,7 @@ if project_choice == "Home":
     st.write("Select a project from the sidebar to get started.")
     
 elif project_choice == "Text-To-Speech":
-    st.write("### Welcome to Xara! Text-To-Speech bot")
+    st.write("### Welcome to Xara! Text-To-Speech Bot")
     st.write("This project uses text-to-speech to create a chatbot voice.")
 
     # Define the language options
