@@ -184,3 +184,11 @@ elif project_choice == "Project 5":
     # Add details or navigation here for Project 5
 else:
     st.write("### Select a project from the sidebar to view its page.")
+
+
+st.markdown("""
+    <footer style="text-align: center; padding: 10px;">
+        <p>Copyright (c) 2024 Pavansai. All rights reserved.</p>
+        <p>Licensed under the MIT License. See LICENSE file for details.</p>
+    </footer>
+    """, unsafe_allow_html=True)
