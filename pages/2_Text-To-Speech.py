@@ -117,11 +117,13 @@ if uploaded_file is not None:
 # Text area for display and editing
 user_input_text = st.text_area("Text to be read aloud:", mytext, height=100)
 
-# Buttons for Translate and Code
+# Add a variable to store the translated text
+translated_text = ""
+
 col1, col2 = st.columns(2)
 
 with col1:
-    if st.button("Translate and speech"):
+    if st.button("Translate and speak"):
         if not user_input_text:
             st.warning("Please enter text to translate.")
         elif indian_language_choice == "None" and international_language_choice == "None":
@@ -161,10 +163,11 @@ with col1:
                             if chunk.strip():  # Ensure there's text to process
                                 try:
                                     # Translate the text
-                                    translated_text = GoogleTranslator(source='auto', target=chosen_language).translate(chunk)
+                                    translated_chunk = GoogleTranslator(source='auto', target=chosen_language).translate(chunk)
+                                    translated_text += translated_chunk + " "  # Append each chunk to the translated text
 
                                     # Convert the translated text to speech
-                                    output = gTTS(text=translated_text, lang=chosen_language, slow=False)
+                                    output = gTTS(text=translated_chunk, lang=chosen_language, slow=False)
                                     output_file = "translated_output.mp3"
                                     output.save(output_file)
 
@@ -174,6 +177,9 @@ with col1:
                                     st.error(f"An error occurred during translation or speech generation: {e}")
             except Exception as e:
                 st.error(f"An error occurred during translation: {e}")
+
+        # Display the translated text in a text box after translation
+        st.text_area("Translated Text:", translated_text, height=200)
 
 with col2:
     if st.button("Code!"):
