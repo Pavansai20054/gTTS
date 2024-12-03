@@ -183,8 +183,7 @@ with col1:
 
 with col2:
     if st.button("Code!"):
-        github_url = "https://github.com/Pavansai20054/gTTS/blob/main/Home.py"
-        st.markdown(f"[Here you will get the code.]({github_url})", unsafe_allow_html=True)
+        github_url = "https://github.com/Pavansai20054/gTTS/blob/main/pages/2_Text-To-Speech.py"
 
 st.markdown("""
     <footer style="text-align: center; padding: 10px;">
