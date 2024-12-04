@@ -183,7 +183,11 @@ with col1:
 
 with col2:
     if st.button("Code!"):
+        # Redirect to the GitHub link
         github_url = "https://github.com/Pavansai20054/gTTS/blob/main/pages/2_Text-To-Speech.py"
+        js_code = f"window.open('{github_url}')"
+        st.markdown(f"<script>{js_code}</script>", unsafe_allow_html=True)
+
 
 st.markdown("""
     <footer style="text-align: center; padding: 10px;">
