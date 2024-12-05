@@ -28,7 +28,7 @@ indian_languages = {
 
 international_languages = {
     "Arabic": 'ar',
-    "Chinese": 'zh-cn',
+    "Chinese": 'zh-CN',
     "Dutch": 'nl',
     "English": 'en',
     "French": 'fr',
